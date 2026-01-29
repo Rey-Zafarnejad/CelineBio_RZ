@@ -1,0 +1,49 @@
+output:
+  dir: /workspace/CelineBio_RZ/outputs
+  log_path: /workspace/CelineBio_RZ/outputs/pipeline.log
+
+rotterdam:
+  metadata_path: /path/to/GSE33828_RS3-881-age-gender.txt.gz
+  expression_path: /path/to/GSE33828_RS3-ExpressionMatrix-881-QN-L2T-PC-SZT-Ordered.txt.gz
+  sample_id_col: sample_id
+  age_col: age
+  sex_col: sex
+  probe_mapping_path: /path/to/illumina_probe_mapping.csv
+  gene_sets_path: /path/to/senescence_gene_sets.gmt
+  use_rpy2: false
+
+clues:
+  counts_path: /path/to/GSE277909_genecounts_SLE_bulk.csv.gz
+  metadata_path: /path/to/GSE277909_metadata.csv
+  gene_mapping_path: /path/to/ensembl_to_symbol.csv
+  min_library_size: 1000000
+  min_cpm: 0.5
+  min_samples: 10
+  collapse_method: mean
+  zscore: true
+  use_rpy2: false
+  allow_online_mapping: false
+
+scoring:
+  expression_path: /workspace/CelineBio_RZ/outputs/clues/clues_expr_gene.parquet
+  metadata_path: /workspace/CelineBio_RZ/outputs/clues/clues_meta.parquet
+  gsva_reference_path: /workspace/CelineBio_RZ/outputs/rotterdam/rotterdam_reference_gsva.joblib
+  pca_reference_path: /workspace/CelineBio_RZ/outputs/rotterdam/rotterdam_reference_pca.joblib
+  gene_sets_path: /path/to/senescence_gene_sets.gmt
+  age_col: age
+  sex_col: sex
+  sample_id_col: sample_id
+  use_rpy2: false
+
+foundation_model:
+  datasets: []
+  model:
+    hidden_dim: 256
+    layers: 2
+  mask_ratio: 0.15
+  batch_size: 64
+  epochs: 10
+  learning_rate: 0.001
+
+clinic_report:
+  scores_path: /workspace/CelineBio_RZ/outputs/scoring/senescence_scores.parquet
